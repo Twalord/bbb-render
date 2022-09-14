@@ -58,10 +58,6 @@ class Downloader:
         self._get('metadata.xml')
         shapes = self._get('shapes.svg')
         doc = ET.parse(shapes)
-        for imgurl in {img.get('{http://www.w3.org/1999/xlink}href')
-                       for img in doc.iterfind('.//{http://www.w3.org/2000/svg}image')}:
-            self._get(imgurl)
-
         self._get('panzooms.xml')
         self._get('cursor.xml')
         self._get('deskshare.xml')
@@ -69,8 +65,13 @@ class Downloader:
         self._get('captions.json')
         self._get('slides_new.xml')
 
-        self._get('video/webcams.webm')
-        self._get('deskshare/deskshare.webm')
+        self._get('video/webcams.mp4')
+        self._get('deskshare/deskshare.mp4')
+
+        for imgurl in {img.get('{http://www.w3.org/1999/xlink}href')
+            for img in doc.iterfind('.//{http://www.w3.org/2000/svg}image')}:
+                self._get(imgurl)
+
 
 
 def main(argv):
